@@ -4,7 +4,7 @@ var po2json = require('../'),
 	fs = require('fs'),
   version = require('../package.json').version;
 
-require("commander")
+require("commander").program
   .version(version)
   .arguments('<input> <output>')
   .option('-p --pretty', 'pretty-print JSON')
@@ -14,10 +14,14 @@ require("commander")
   .option('-d --domain [domain]', 'domain')
   .option('--fallback-to-msgid', 'use msgid if translation is missing (nplurals must match)')
   .action(function (input, output, options) {
-    options.stringify = true;
-    var result = po2json.parseFileSync(input, options),
+    // commander camel-cases dashed flags, parse() expects its own option names
+    var result = po2json.parseFileSync(input, Object.assign({}, options, {
+          stringify: true,
+          fullMF: options.fullMf,
+          'fallback-to-msgid': options.fallbackToMsgid
+        })),
         stream = fs.createWriteStream(output, {});
 
-    stream.write(result);
+    stream.end(result);
   })
   .parse(process.argv);
