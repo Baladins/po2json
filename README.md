@@ -214,7 +214,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 ### 1.0.1 / 2026-07-23
-Dependency refresh. Existing output is unchanged, header names included:
+Dependency refresh, existing output is unchanged.
 
  * Added the `escape-params` option (`--no-escape-params` on the command line). Set it to `false` to keep `{`, `}`, `#` and
    `\` unescaped in `format: 'mf'`, so that a `{{error}}` placeholder is not written out as `\{\{error\}\}` (issue #77).
