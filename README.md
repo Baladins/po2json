@@ -46,6 +46,26 @@ Parse a PO buffer to JSON
 		* `fallback-to-msgid` If `true`, for those entries that would be omitted (fuzzy entries without the fuzzy flag) and for those
 		that are empty, the msgid will be used as translation in the json file. If the entry is plural, msgid_plural will be used for
 		msgstr[1]. This means that this option makes sense only for those languages that have nplurals=2.
+		* `mfOptions` Options handed to [gettext-to-messageformat](https://github.com/eemeli/gettext-to-messageformat). Only has
+		effect if `format: 'mf'`. Defaults to `{}`, anything given here wins over the options po2json sets itself.
+		* `escape-params` Whether `{`, `}`, `#` and `\` are escaped so that MessageFormat reads them as literals. Set it to
+		`false` to write a `{{error}}` placeholder out as-is instead of `\{\{error\}\}`. Only has effect if `format: 'mf'`.
+		Defaults to `true`. Turn it off for consumers that read the JSON as plain strings and use braces for their own
+		translation parameters, such as [ngx-translate](https://github.com/ngx-translate/core).
+
+#### Braces, hashes and backslashes (`format: 'mf'`)
+
+gettext-to-messageformat escapes `{`, `}`, `#` and `\` so that MessageFormat reads them as literals, which turns a
+`{{error}}` placeholder into `\{\{error\}\}` (issue #77). `escape-params: false` drops that one rule while keeping the `%s`,
+`%d`, `%(name)s` and `%%` conversion:
+
+```
+po2json.parseFileSync('messages.po', { format: 'mf', 'escape-params': false });
+```
+
+Note that a literal `#` inside a plural is then read by MessageFormat as the plural number, so leave the escaping on when
+the JSON is handed to a MessageFormat compiler. The replacement list behind the option is exported as
+`po2json.mfReplacements` to build a list of your own from, for use with `mfOptions.replacements`.
 
 Parse a PO file to JSON
 
@@ -71,6 +91,7 @@ default options.
 * --full-mf, -M: return full messageformat output (instead of only translations)
 * --domain, -d: same as domain in function options
 * --fallback-to-msgid': 'use msgid if translation is missing (nplurals must match)
+* --no-escape-params: same as 'escape-params' = false in function options
 
 Note: `'format': 'mf'` means the json format used by messageFormatter in github.com/SlexAxton/messageformat.js
 and `jedold` refers to Jed formats below 1.1.0
@@ -192,6 +213,25 @@ npm test
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt](https://github.com/gruntjs/grunt).
 
 ## Release History
+### 1.0.1 / 2026-07-23
+Dependency refresh. Existing output is unchanged, header names included:
+
+ * Added the `escape-params` option (`--no-escape-params` on the command line). Set it to `false` to keep `{`, `}`, `#` and
+   `\` unescaped in `format: 'mf'`, so that a `{{error}}` placeholder is not written out as `\{\{error\}\}` (issue #77).
+   Escaping stays on by default, turning it off is meant for consumers reading the JSON as plain strings, such as
+   ngx-translate.
+ * Fixed the command line `--full-mf`/`-M` and `--fallback-to-msgid` flags, which reach `parse` again. commander
+   camel-cases dashed flags, so both had been silently ignored.
+ * Updated to gettext-parser 9, which is ESM only and needs node >= 20.19 to be `require`d. Its second argument became
+   an options object (`{defaultCharset}`), and it now reports header names in canonical case (`Plural-Forms`) which
+   po2json lower-cases again on the way out.
+ * Updated to gettext-to-messageformat 0.4, and `pluralFunction` now carries both `cardinal` and `cardinals` so it can
+   be handed to either messageformat generation.
+ * Fixed the executable against commander 15, which stopped exporting the program as the module itself.
+ * Documented `mfOptions`, and moved the messageformat examples to `@messageformat/core` (`messageformat@2` usage is
+   still documented, `messageformat@4` is an `Intl.MessageFormat` polyfill and does not read this format).
+ * Tests moved from jest 25 to jest 30 and from messageformat 2 to `@messageformat/core` 3.
+
 ### 1.0.0 / 2018-09-24
  * Updated dependencies.
  * Replaced nomnom with commander.
