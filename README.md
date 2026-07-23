@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@baladins/po2json.svg?style=flat)](https://www.npmjs.com/package/@baladins/po2json)
 [![Build Status](https://github.com/Baladins/po2json/actions/workflows/main.yml/badge.svg)](https://github.com/Baladins/po2json/actions/workflows/main.yml)
-[![node](https://img.shields.io/badge/node-%3E%3D20.19-brightgreen.svg?style=flat)](https://nodejs.org)
+[![node](https://img.shields.io/badge/node-%3E%3D22.12-brightgreen.svg?style=flat)](https://nodejs.org)
 
 Convert PO files to Javascript objects or JSON strings. The result is Jed-compatible.
 
@@ -231,7 +231,8 @@ Dependency refresh. Existing output is unchanged, header names included:
    ngx-translate.
  * Fixed the command line `--full-mf`/`-M` and `--fallback-to-msgid` flags, which reach `parse` again. commander
    camel-cases dashed flags, so both had been silently ignored.
- * Updated to gettext-parser 9, which is ESM only and needs node >= 20.19 to be `require`d. Its second argument became
+ * Updated to gettext-parser 9, which is ESM only and needs node >= 22.12 to be `require`d, so node 22 and 24 are the
+   supported releases now. Its second argument became
    an options object (`{defaultCharset}`), and it now reports header names in canonical case (`Plural-Forms`) which
    po2json lower-cases again on the way out.
  * Updated to gettext-to-messageformat 0.4, and `pluralFunction` now carries both `cardinal` and `cardinals` so it can

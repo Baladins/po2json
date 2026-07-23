@@ -55,7 +55,7 @@
     "po2json": "bin/po2json"
   },
   "engines": {
-    "node": ">=20.19"
+    "node": ">=24.13"
   },
   "scripts": {
     "test": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js"

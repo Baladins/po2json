@@ -3,7 +3,7 @@ name: Build Status
 # Controls when the workflow will run
 on:
   pull_request:
-    branches: [ develop, main ]
+    branches: [ master, main ]
   push:
     branches: [ main ]
 
@@ -17,8 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # gettext-parser 9 is ESM only, require()ing it needs node >= 20.19
-        node-version: ['20.19', '22', '24']
+        node-version: ['24']
 
     name: node ${{ matrix.node-version }}
 
