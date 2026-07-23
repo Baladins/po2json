@@ -54,6 +54,7 @@
   "bin": {
     "po2json": "bin/po2json"
   },
+  "main": "index.js",
   "engines": {
     "node": ">=24.13"
   },
