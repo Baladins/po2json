@@ -106,28 +106,52 @@ try {
 ```
 
 ### Parse a PO file to messageformat format
+`messageformat@2` was renamed to [`@messageformat/core`](https://messageformat.github.io/), which
+compiles one message at a time instead of a whole object, so translations are walked by hand:
+
 ```
 var po2json = require('po2json'),
-    MessageFormat = require('messageformat');
+    MessageFormat = require('@messageformat/core');
+
+function compileAll(mf, translations) {
+    return Object.keys(translations).reduce(function (messages, key) {
+        var message = translations[key];
+        // nested objects are msgctxt contexts
+        messages[key] = typeof message === 'string' ? mf.compile(message) : compileAll(mf, message);
+        return messages;
+    }, {});
+}
 
 po2json.parseFile('es.po', { format: 'mf' }, function (err, translations) {
-    var pFunc = function (n) {
+    var es = function (n) {
       return (n==1 ? 'p0' : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 'p1' : 'p2');
     };
-    pFunc.cardinal = [ 'p0', 'p1', 'p2' ];
-    var mf = new MessageFormat(
-      {
-        'es': pFunc
-      }
-    );
-    var i18n = mf.compile( translations );
+    es.cardinals = [ 'p0', 'p1', 'p2' ];
+    var mf = new MessageFormat(es);
+    var i18n = compileAll(mf, translations);
 });
 ```
+
+The locale is taken from the name of the plural function, so name it after the locale it describes.
 
 ### Parse a PO file to messageformat format using the full format
 ```
 var po2json = require('po2json'),
-    MessageFormat = require('messageformat');
+    MessageFormat = require('@messageformat/core');
+
+po2json.parseFile('messages.po', { format: 'mf', fullMF: true }, function (err, jsonData) {
+    var mf = new MessageFormat(jsonData.pluralFunction);
+    var i18n = compileAll(mf, jsonData.translations);
+});
+```
+
+#### Still on messageformat@2?
+The output is unchanged, only the calls into messageformat differ. `pluralFunction` carries both the
+`cardinal` (messageformat@2) and `cardinals` (`@messageformat/core`) plural category lists, so the
+legacy form keeps working:
+
+```
+var MessageFormat = require('messageformat');   // messageformat@2
 
 po2json.parseFile('messages.po', { format: 'mf', fullMF: true }, function (err, jsonData) {
     var mf = new MessageFormat(
@@ -136,6 +160,9 @@ po2json.parseFile('messages.po', { format: 'mf', fullMF: true }, function (err, 
     var i18n = mf.compile( jsonData.translations );
 });
 ```
+
+Note that `messageformat@4` is *not* a newer `messageformat@2`: it is a polyfill for the upcoming
+`Intl.MessageFormat` and does not read the format produced here.
 
 ### Parse a PO file to Jed >= 1.1.0 format
 ```
