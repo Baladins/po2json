@@ -1,10 +1,19 @@
 # po2json
 
-[![Build Status](https://secure.travis-ci.org/mikeedwards/po2json.png?branch=master)](http://travis-ci.org/mikeedwards/po2json)
-[![Dependency Status](https://david-dm.org/mikeedwards/po2json.png?theme=shields.io)](https://david-dm.org/mikeedwards/po2json)
-[![devDependency Status](https://david-dm.org/mikeedwards/po2json/dev-status.png?theme=shields.io)](https://david-dm.org/mikeedwards/po2json#info=devDependencies)
+[![npm version](https://img.shields.io/npm/v/@baladins/po2json.svg?style=flat)](https://www.npmjs.com/package/@baladins/po2json)
+[![Build Status](https://github.com/Baladins/po2json/actions/workflows/main.yml/badge.svg)](https://github.com/Baladins/po2json/actions/workflows/main.yml)
+[![node](https://img.shields.io/badge/node-%3E%3D20.19-brightgreen.svg?style=flat)](https://nodejs.org)
 
 Convert PO files to Javascript objects or JSON strings. The result is Jed-compatible.
+
+
+## Fork Notes
+
+This is a maintained fork of [`po2json`](https://github.com/mikeedwards/po2json), published as
+[`@baladins/po2json`](https://www.npmjs.com/package/@baladins/po2json) so that the updates below are
+installable today. It is meant to stay a drop-in replacement, and will be deprecated if and when these
+changes land upstream.
+
 
 ## Getting Started
 Install the module with: `npm install po2json`
