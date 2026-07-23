@@ -223,24 +223,13 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 ### 1.0.1 / 2026-07-23
-Dependency refresh. Existing output is unchanged, header names included:
+Dependency refresh, existing output is unchanged.
 
- * Added the `escape-params` option (`--no-escape-params` on the command line). Set it to `false` to keep `{`, `}`, `#` and
-   `\` unescaped in `format: 'mf'`, so that a `{{error}}` placeholder is not written out as `\{\{error\}\}` (issue #77).
-   Escaping stays on by default, turning it off is meant for consumers reading the JSON as plain strings, such as
-   ngx-translate.
- * Fixed the command line `--full-mf`/`-M` and `--fallback-to-msgid` flags, which reach `parse` again. commander
-   camel-cases dashed flags, so both had been silently ignored.
- * Updated to gettext-parser 9, which is ESM only and needs node >= 22.12 to be `require`d, so node 22 and 24 are the
-   supported releases now. Its second argument became
-   an options object (`{defaultCharset}`), and it now reports header names in canonical case (`Plural-Forms`) which
-   po2json lower-cases again on the way out.
- * Updated to gettext-to-messageformat 0.4, and `pluralFunction` now carries both `cardinal` and `cardinals` so it can
-   be handed to either messageformat generation.
- * Fixed the executable against commander 15, which stopped exporting the program as the module itself.
- * Documented `mfOptions`, and moved the messageformat examples to `@messageformat/core` (`messageformat@2` usage is
-   still documented, `messageformat@4` is an `Intl.MessageFormat` polyfill and does not read this format).
- * Tests moved from jest 25 to jest 30 and from messageformat 2 to `@messageformat/core` 3.
+ * Updated gettext-parser to 9, gettext-to-messageformat to 0.4 and commander to 15.
+ * Added the `escape-params` option (`--no-escape-params`), set it to `false` to keep `{`, `}`, `#` and `\` unescaped in `format: 'mf'` (issue #77).
+ * Fixed the executable, which crashed on commander 15, along with its `--full-mf`/`-M` and `--fallback-to-msgid` flags.
+ * Moved the messageformat examples to `@messageformat/core`, `messageformat@4` is a different thing.
+ * Tests moved from jest 25 to jest 30, and node >= 24.13 is now required.
 
 ### 1.0.0 / 2018-09-24
  * Updated dependencies.
