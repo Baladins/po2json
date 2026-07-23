@@ -1,8 +1,8 @@
 {
-  "name": "po2json",
+  "name": "@baladins/po2json",
   "description": "Convert PO files to JSON",
   "version": "1.0.0-beta-4",
-  "homepage": "https://github.com/mikeedwards/po2json",
+  "homepage": "https://github.com/baladins/po2json",
   "author": {
     "name": "Joshua I. Miller",
     "email": "unrtst@cpan.org"
@@ -37,14 +37,18 @@
     {
       "name": "Alex Petty",
       "email": "pettyalex@gmail.com"
+    },
+    {
+      "name": "Harold Thetiot",
+      "email": "hthetiot@gmail.com"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/mikeedwards/po2json.git"
+    "url": "git://github.com/baladins/po2json.git"
   },
   "bugs": {
-    "url": "https://github.com/mikeedwards/po2json/issues"
+    "url": "https://github.com/baladins/po2json/issues"
   },
   "license": "LGPL-2.0-or-later",
   "bin": {
