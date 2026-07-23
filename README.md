@@ -222,7 +222,7 @@ npm test
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt](https://github.com/gruntjs/grunt).
 
 ## Release History
-### 1.0.1 / 2026-07-23
+### 1.0.0 / 2026-07-23
 Dependency refresh, existing output is unchanged.
 
  * Updated gettext-parser to 9, gettext-to-messageformat to 0.4 and commander to 15.
