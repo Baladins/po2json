@@ -51,15 +51,18 @@
     "po2json": "bin/po2json"
   },
   "engines": {
-    "node": ">=10.0"
+    "node": ">=20.19"
   },
   "scripts": {
-    "test": "jest"
+    "test": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "jest": {
+    "transform": {}
   },
   "devDependencies": {
+    "@messageformat/core": "^3.4.0",
     "jed": "^1.1.1",
-    "jest": "^25.5.4",
-    "messageformat": "^2.3.0"
+    "jest": "^30.4.2"
   },
   "keywords": [
     "i18n",
@@ -69,7 +72,7 @@
   ],
   "dependencies": {
     "commander": "^15.0.0",
-    "gettext-parser": "^3.1.1",
-    "gettext-to-messageformat": "^0.3.1"
+    "gettext-parser": "^9.1.1",
+    "gettext-to-messageformat": "^0.4.0"
   }
 }
